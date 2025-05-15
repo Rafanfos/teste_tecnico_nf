@@ -23,7 +23,7 @@ model InvoiceRequest {
   invoiceNumber      String?
   invoiceIssueDate   DateTime?
 
-  @@map("solicitacoes_notas_fiscais")
+  @@map("invoices")
 }
 
 enum StatusNotaFiscal {
