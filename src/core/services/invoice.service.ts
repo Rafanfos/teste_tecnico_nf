@@ -1,6 +1,6 @@
 import {
+  InvoiceStatus,
   InvoiceRequest as PrismaInvoiceRequest,
-  StatusNotaFiscal,
 } from "@prisma/client";
 import {
   IInvoiceRequestCreate,
@@ -46,11 +46,11 @@ export class InvoiceService {
       throw new Error("Solicitação não encontrada.");
     }
 
-    if (invoiceRequest.status === StatusNotaFiscal.EMITIDA) {
+    if (invoiceRequest.status === InvoiceStatus.EMITIDA) {
       throw new Error("Nota Fiscal já emitida para esta solicitação.");
     }
 
-    if (invoiceRequest.status === StatusNotaFiscal.CANCELADA) {
+    if (invoiceRequest.status === InvoiceStatus.CANCELADA) {
       throw new Error(
         "Não é possível emitir Nota Fiscal para uma solicitação cancelada."
       );
@@ -72,7 +72,7 @@ export class InvoiceService {
       const updatedInvoiceRequest = await this.invoiceRepository.update(
         invoiceRequestId,
         {
-          status: StatusNotaFiscal.EMITIDA,
+          status: InvoiceStatus.EMITIDA,
           invoiceNumber: emissionResponse.invoiceNumber,
           invoiceIssueDate: new Date(emissionResponse.issueDate),
         }
