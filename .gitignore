@@ -1,0 +1,14 @@
+node_modules
+dist
+.env
+*.log
+package-lock.json
+
+# Prisma
+prisma/migrations/*.sqlite
+prisma/dev.db
+
+# Jest
+coverage
+
+
