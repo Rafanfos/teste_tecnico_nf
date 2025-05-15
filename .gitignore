@@ -1,3 +1,13 @@
 node_modules
 dist
-package-lock.json
+.env
+*.log
+
+# Prisma
+prisma/migrations/*.sqlite
+prisma/dev.db
+
+# Jest
+coverage
+
+
