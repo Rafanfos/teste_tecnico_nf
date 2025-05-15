@@ -2,6 +2,7 @@ import express, { Express, Request, Response, NextFunction } from "express";
 import "dotenv/config";
 import invoiceRoutes from "./api/routes/invoice.routes";
 import { errorHandler } from "./api/middlewares/errorHandler";
+import { AppError } from "./core/interfaces/error.interfaces";
 
 const app: Express = express();
 

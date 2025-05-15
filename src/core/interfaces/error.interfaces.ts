@@ -1,4 +1,4 @@
-interface AppError extends Error {
+export interface AppError extends Error {
   status?: number;
   message: string;
 }
