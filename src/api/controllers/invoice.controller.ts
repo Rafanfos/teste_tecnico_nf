@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import { IInvoiceRequestCreate } from "../../core/interfaces/invoice.interfaces"; // Updated import path and interface name
+import { IInvoiceRequestCreate } from "../../core/interfaces/invoice.interfaces";
 import { InvoiceService } from "../../core/services/invoice.service";
 
 export class InvoiceController {
@@ -33,7 +33,7 @@ export class InvoiceController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const invoiceRequests = await this.invoiceService.listInvoiceRequests(); // Calling updated service method
+      const invoiceRequests = await this.invoiceService.listInvoiceRequests();
       res.status(200).json(invoiceRequests);
     } catch (error) {
       next(error);
@@ -51,7 +51,7 @@ export class InvoiceController {
         id
       );
       if (!invoiceRequest) {
-        res.status(404).json({ message: "Solicitação não encontrada." }); // User-facing message, kept in Portuguese
+        res.status(404).json({ message: "Solicitação não encontrada." });
         return;
       }
       res.status(200).json(invoiceRequest);
@@ -67,7 +67,7 @@ export class InvoiceController {
   ): Promise<void> {
     try {
       const { id } = req.params;
-      const issuedInvoice = await this.invoiceService.emitInvoice(id); // Calling updated service method
+      const issuedInvoice = await this.invoiceService.emitInvoice(id);
       res.status(200).json(issuedInvoice);
     } catch (error: any) {
       if (error.message.includes("Solicitação não encontrada")) {

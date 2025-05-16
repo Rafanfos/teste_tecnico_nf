@@ -3,7 +3,7 @@ import {
   IInvoiceEmissionPayload,
   IInvoiceEmissionSuccessResponse,
   IExternalInvoiceService,
-} from "../../core/interfaces/invoice.interfaces"; // Adjusted import path
+} from "../../core/interfaces/invoice.interfaces";
 
 const DRFINANCAS_API_URL = process.env.DRFINANCAS_API_URL;
 const DRFINANCAS_API_KEY = process.env.DRFINANCAS_API_KEY;
@@ -29,7 +29,6 @@ export class DrFinancasClient implements IExternalInvoiceService {
   async emitInvoice(
     payload: IInvoiceEmissionPayload
   ): Promise<IInvoiceEmissionSuccessResponse> {
-    // Renamed method and updated payload/response types
     try {
       const response =
         await this.apiClient.post<IInvoiceEmissionSuccessResponse>(
