@@ -16,7 +16,7 @@ app.get("/health", (req: Request, res: Response) => {
   res.status(200).json({ status: "UP", timestamp: new Date().toISOString() });
 });
 
-app.use("/api/invoice-requests", invoiceRoutes);
+app.use("/api/invoices", invoiceRoutes);
 
 app.use(errorHandler);
 

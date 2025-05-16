@@ -1,46 +1,42 @@
+import { InvoiceStatus } from "@prisma/client";
 import {
-  InvoiceStatus,
-  InvoiceRequest as PrismaInvoiceRequest,
-} from "@prisma/client";
-import {
-  IInvoiceRequestCreate,
-  IInvoiceRequestRepository,
   IExternalInvoiceService,
+  IInvoiceCreateInput,
   IInvoiceEmissionPayload,
   IInvoiceEmissionSuccessResponse,
+  IInvoiceOutput,
+  IInvoiceRepository,
 } from "../interfaces/invoice.interfaces";
-import { InvoiceRequestRepository } from "../repositories/invoice.repository";
+import { InvoiceRepository } from "../repositories/invoice.repository";
 import { DrFinancasClient } from "../../infra/http/drfinancas.client";
 
 export class InvoiceService {
-  private invoiceRepository: IInvoiceRequestRepository;
+  private invoiceRepository: IInvoiceRepository;
   private externalInvoiceService: IExternalInvoiceService;
 
   constructor() {
-    this.invoiceRepository = new InvoiceRequestRepository();
+    this.invoiceRepository = new InvoiceRepository();
     this.externalInvoiceService = new DrFinancasClient();
   }
 
-  async createInvoiceRequest(
-    data: IInvoiceRequestCreate
-  ): Promise<PrismaInvoiceRequest> {
+  async createInvoiceService(
+    data: IInvoiceCreateInput
+  ): Promise<IInvoiceOutput> {
     return this.invoiceRepository.create(data);
   }
 
-  async listInvoiceRequests(): Promise<PrismaInvoiceRequest[]> {
+  async listInvoicesService(): Promise<IInvoiceOutput[]> {
     return this.invoiceRepository.findAll();
   }
 
-  async findInvoiceRequestById(
-    id: string
-  ): Promise<PrismaInvoiceRequest | null> {
-    return this.invoiceRepository.findById(id);
+  async findInvoiceByIdService(id: string): Promise<IInvoiceOutput | null> {
+    return this.invoiceRepository.findById({ id });
   }
 
-  async emitInvoice(invoiceRequestId: string): Promise<PrismaInvoiceRequest> {
-    const invoiceRequest = await this.invoiceRepository.findById(
-      invoiceRequestId
-    );
+  async emitInvoiceService(invoiceRequestId: string): Promise<IInvoiceOutput> {
+    const invoiceRequest = await this.invoiceRepository.findById({
+      id: invoiceRequestId,
+    });
 
     if (!invoiceRequest) {
       throw new Error("Solicitação não encontrada.");
@@ -69,14 +65,14 @@ export class InvoiceService {
       const emissionResponse: IInvoiceEmissionSuccessResponse =
         await this.externalInvoiceService.emitInvoice(payload);
 
-      const updatedInvoiceRequest = await this.invoiceRepository.update(
-        invoiceRequestId,
-        {
+      const updatedInvoiceRequest = await this.invoiceRepository.update({
+        id: invoiceRequestId,
+        data: {
           status: InvoiceStatus.EMITIDA,
           invoiceNumber: emissionResponse.invoiceNumber,
           invoiceIssueDate: new Date(emissionResponse.issueDate),
-        }
-      );
+        },
+      });
 
       if (!updatedInvoiceRequest) {
         throw new Error("Falha ao atualizar solicitação após emissão.");

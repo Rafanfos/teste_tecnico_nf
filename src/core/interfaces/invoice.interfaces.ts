@@ -1,9 +1,6 @@
-import {
-  InvoiceRequest as PrismaInvoiceRequest,
-  StatusNotaFiscal,
-} from "@prisma/client";
+import { InvoiceModel } from "@prisma/client";
 
-export interface IInvoiceRequestCreate {
+export interface IInvoiceCreateInput {
   takerCnpj: string;
   serviceCity: string;
   serviceState: string;
@@ -12,20 +9,22 @@ export interface IInvoiceRequestCreate {
   serviceDescription: string;
 }
 
-export interface IInvoiceRequestUpdate {
-  status?: StatusNotaFiscal;
-  invoiceNumber?: string;
-  invoiceIssueDate?: Date;
+export interface IInvoiceFindByIdInput {
+  id: string;
 }
 
-export interface IInvoiceRequestRepository {
-  create(data: IInvoiceRequestCreate): Promise<PrismaInvoiceRequest>;
-  findAll(): Promise<PrismaInvoiceRequest[]>;
-  findById(id: string): Promise<PrismaInvoiceRequest | null>;
-  update(
-    id: string,
-    data: Partial<PrismaInvoiceRequest>
-  ): Promise<PrismaInvoiceRequest | null>;
+export interface IInvoiceUpdateInput {
+  id: string;
+  data: Partial<Omit<InvoiceModel, "id" | "createdAt">>;
+}
+
+export interface IInvoiceOutput extends InvoiceModel {}
+
+export interface IInvoiceRepository {
+  create(input: IInvoiceCreateInput): Promise<IInvoiceOutput>;
+  findAll(): Promise<IInvoiceOutput[]>;
+  findById(input: IInvoiceFindByIdInput): Promise<IInvoiceOutput | null>;
+  update(input: IInvoiceUpdateInput): Promise<IInvoiceOutput | null>;
 }
 
 export interface IInvoiceEmissionPayload {

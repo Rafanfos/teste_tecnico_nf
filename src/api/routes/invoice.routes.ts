@@ -42,7 +42,7 @@ invoiceRoutes.post(
   "/",
   validateRequest(createInvoiceRequestSchema),
   (req: Request, res: Response, next: NextFunction) =>
-    invoiceController.createInvoiceRequest(req, res, next)
+    invoiceController.createInvoiceController(req, res, next)
 );
 
 /**
@@ -63,7 +63,7 @@ invoiceRoutes.post(
  *                 $ref: "#/components/schemas/InvoiceRequest"
  */
 invoiceRoutes.get("/", (req: Request, res: Response, next: NextFunction) =>
-  invoiceController.listInvoiceRequests(req, res, next)
+  invoiceController.listInvoiceController(req, res, next)
 );
 
 /**
@@ -99,7 +99,7 @@ invoiceRoutes.get(
   "/:id",
   validateRequest(getInvoiceRequestSchema),
   (req: Request, res: Response, next: NextFunction) =>
-    invoiceController.findInvoiceRequestById(req, res, next)
+    invoiceController.findInvoiceByIdController(req, res, next)
 );
 
 /**
@@ -153,7 +153,7 @@ invoiceRoutes.post(
   "/:id/emit",
   validateRequest(emitInvoiceSchema),
   (req: Request, res: Response, next: NextFunction) =>
-    invoiceController.emitInvoice(req, res, next)
+    invoiceController.emitInvoiceController(req, res, next)
 );
 
 export default invoiceRoutes;

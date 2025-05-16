@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model InvoiceRequest {
+model InvoiceModel {
   id                 String   @id @default(cuid())
   takerCnpj          String
   serviceCity        String

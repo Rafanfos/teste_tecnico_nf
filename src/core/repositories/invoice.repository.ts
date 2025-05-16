@@ -1,23 +1,22 @@
+import { InvoiceStatus, PrismaClient } from "@prisma/client";
 import {
-  InvoiceStatus,
-  PrismaClient,
-  InvoiceRequest as PrismaInvoiceRequest,
-} from "@prisma/client";
-import {
-  IInvoiceRequestCreate,
-  IInvoiceRequestRepository,
+  IInvoiceCreateInput,
+  IInvoiceFindByIdInput,
+  IInvoiceOutput,
+  IInvoiceRepository,
+  IInvoiceUpdateInput,
 } from "../interfaces/invoice.interfaces";
 import prisma from "../../infra/database/prisma";
 
-export class InvoiceRequestRepository implements IInvoiceRequestRepository {
+export class InvoiceRepository implements IInvoiceRepository {
   private prisma: PrismaClient;
 
   constructor() {
     this.prisma = prisma;
   }
 
-  async create(data: IInvoiceRequestCreate): Promise<PrismaInvoiceRequest> {
-    return this.prisma.invoiceRequest.create({
+  async create(data: IInvoiceCreateInput): Promise<IInvoiceOutput> {
+    return this.prisma.invoiceModel.create({
       data: {
         takerCnpj: data.takerCnpj,
         serviceCity: data.serviceCity,
@@ -30,21 +29,23 @@ export class InvoiceRequestRepository implements IInvoiceRequestRepository {
     });
   }
 
-  async findAll(): Promise<PrismaInvoiceRequest[]> {
-    return this.prisma.invoiceRequest.findMany();
+  async findAll(): Promise<IInvoiceOutput[]> {
+    return this.prisma.invoiceModel.findMany();
   }
 
-  async findById(id: string): Promise<PrismaInvoiceRequest | null> {
-    return this.prisma.invoiceRequest.findUnique({
+  async findById({
+    id,
+  }: IInvoiceFindByIdInput): Promise<IInvoiceOutput | null> {
+    return this.prisma.invoiceModel.findUnique({
       where: { id },
     });
   }
 
-  async update(
-    id: string,
-    data: Partial<Omit<PrismaInvoiceRequest, "id" | "createdAt">>
-  ): Promise<PrismaInvoiceRequest | null> {
-    return this.prisma.invoiceRequest.update({
+  async update({
+    id,
+    data,
+  }: IInvoiceUpdateInput): Promise<IInvoiceOutput | null> {
+    return this.prisma.invoiceModel.update({
       where: { id },
       data,
     });

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
-import { IInvoiceRequestCreate } from "../../core/interfaces/invoice.interfaces";
 import { InvoiceService } from "../../core/services/invoice.service";
+import { IInvoiceCreateInput } from "../../core/interfaces/invoice.interfaces";
 
 export class InvoiceController {
   private invoiceService: InvoiceService;
@@ -10,14 +10,14 @@ export class InvoiceController {
     this.invoiceService = new InvoiceService();
   }
 
-  async createInvoiceRequest(
+  async createInvoiceController(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      const createData = req.body as IInvoiceRequestCreate;
-      const invoiceRequest = await this.invoiceService.createInvoiceRequest({
+      const createData = req.body as IInvoiceCreateInput;
+      const invoiceRequest = await this.invoiceService.createInvoiceService({
         ...createData,
         desiredIssueDate: new Date(createData.desiredIssueDate),
       });
@@ -27,27 +27,27 @@ export class InvoiceController {
     }
   }
 
-  async listInvoiceRequests(
+  async listInvoiceController(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      const invoiceRequests = await this.invoiceService.listInvoiceRequests();
+      const invoiceRequests = await this.invoiceService.listInvoicesService();
       res.status(200).json(invoiceRequests);
     } catch (error) {
       next(error);
     }
   }
 
-  async findInvoiceRequestById(
+  async findInvoiceByIdController(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
       const { id } = req.params;
-      const invoiceRequest = await this.invoiceService.findInvoiceRequestById(
+      const invoiceRequest = await this.invoiceService.findInvoiceByIdService(
         id
       );
       if (!invoiceRequest) {
@@ -60,14 +60,14 @@ export class InvoiceController {
     }
   }
 
-  async emitInvoice(
+  async emitInvoiceController(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
       const { id } = req.params;
-      const issuedInvoice = await this.invoiceService.emitInvoice(id);
+      const issuedInvoice = await this.invoiceService.emitInvoiceService(id);
       res.status(200).json(issuedInvoice);
     } catch (error: any) {
       if (error.message.includes("Solicitação não encontrada")) {
