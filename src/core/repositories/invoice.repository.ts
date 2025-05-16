@@ -1,7 +1,7 @@
 import {
+  InvoiceStatus,
   PrismaClient,
   InvoiceRequest as PrismaInvoiceRequest,
-  StatusNotaFiscal,
 } from "@prisma/client";
 import {
   IInvoiceRequestCreate,
@@ -25,7 +25,7 @@ export class InvoiceRequestRepository implements IInvoiceRequestRepository {
         serviceValue: data.serviceValue,
         desiredIssueDate: data.desiredIssueDate,
         serviceDescription: data.serviceDescription,
-        status: StatusNotaFiscal.PENDENTE_EMISSAO, // Status inicial definido aqui, mantido em português
+        status: InvoiceStatus.PENDENTE_EMISSAO, // Status inicial definido aqui, mantido em português
       },
     });
   }
