@@ -13,7 +13,7 @@ const invoiceController = new InvoiceController();
 
 /**
  * @swagger
- * /:
+ * /invoices:
  *   post:
  *     tags: [InvoiceRequests]
  *     summary: Creates a new invoice request
@@ -23,14 +23,14 @@ const invoiceController = new InvoiceController();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: "#/components/schemas/IInvoiceCreate"
+ *             $ref: "#/components/schemas/IInvoiceRequestCreate"
  *     responses:
  *       "201":
  *         description: Invoice request created successfully.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/InvoiceModel"
+ *               $ref: "#/components/schemas/InvoiceRequest"
  *       "400":
  *         description: Invalid input data.
  *         content:
@@ -47,7 +47,7 @@ invoiceRoutes.post(
 
 /**
  * @swagger
- * /:
+ * /invoices:
  *   get:
  *     tags: [InvoiceRequests]
  *     summary: Lists all invoice requests
@@ -60,7 +60,7 @@ invoiceRoutes.post(
  *             schema:
  *               type: array
  *               items:
- *                 $ref: "#/components/schemas/InvoiceModel"
+ *                 $ref: "#/components/schemas/InvoiceRequest"
  */
 invoiceRoutes.get("/", (req: Request, res: Response, next: NextFunction) =>
   invoiceController.listInvoiceController(req, res, next)
@@ -68,7 +68,7 @@ invoiceRoutes.get("/", (req: Request, res: Response, next: NextFunction) =>
 
 /**
  * @swagger
- * /{id}:
+ * /invoices/{id}:
  *   get:
  *     tags: [InvoiceRequests]
  *     summary: Finds an invoice request by ID
@@ -87,7 +87,7 @@ invoiceRoutes.get("/", (req: Request, res: Response, next: NextFunction) =>
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/InvoiceModel"
+ *               $ref: "#/components/schemas/InvoiceRequest"
  *       "404":
  *         description: Invoice request not found.
  *         content:
@@ -104,7 +104,7 @@ invoiceRoutes.get(
 
 /**
  * @swagger
- * /{id}/emit:
+ * /invoices/{id}/emit:
  *   post:
  *     tags: [InvoiceRequests]
  *     summary: Emits an invoice for an existing request

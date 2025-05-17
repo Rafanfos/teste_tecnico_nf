@@ -3,23 +3,57 @@ const swaggerAutogen = require("swagger-autogen")({ openapi: "3.0.0" });
 const doc = {
   info: {
     version: "1.0.0",
-    title: "Invoice Request API",
-    description: "API for managing invoice requests.",
+    title: "API de Solicitações de Notas Fiscais",
+    description: "API para gerenciamento de solicitações de notas fiscais.",
   },
   host: "localhost:3000",
+  basePath: "/invoices",
   schemes: ["http"],
   consumes: ["application/json"],
   produces: ["application/json"],
   tags: [
     {
-      name: "Invoices",
-      description: "Operations related to invoice requests",
+      name: "InvoiceRequests",
+      description: "Operações relacionadas a solicitações de notas fiscais",
     },
   ],
-
+  definitions: {
+    InvoiceRequest: {
+      id: "clxkz2acg000008l3g4z9h2j7",
+      takerCnpj: "12345678000195",
+      serviceCity: "São Paulo",
+      serviceState: "SP",
+      serviceValue: 1500.5,
+      desiredIssueDate: "2024-12-31T00:00:00.000Z",
+      serviceDescription: "Consultoria em desenvolvimento de software",
+      status: "PENDENTE_EMISSAO",
+      createdAt: "2024-05-15T10:00:00.000Z",
+      updatedAt: "2024-05-15T10:00:00.000Z",
+      invoiceNumber: "NF0012345",
+      invoiceIssueDate: "2024-05-15T11:00:00.000Z",
+    },
+    IInvoiceRequestCreate: {
+      takerCnpj: "12345678000195",
+      serviceCity: "São Paulo",
+      serviceState: "SP",
+      serviceValue: 1500.5,
+      desiredIssueDate: "2024-12-31T00:00:00.000Z",
+      serviceDescription: "Consultoria em desenvolvimento de software",
+    },
+    ErrorResponse: {
+      message: "Erro de validação",
+      errors: [
+        {
+          path: "body.takerCnpj",
+          message: "CNPJ deve conter apenas números",
+        },
+      ],
+      details: "Informações adicionais do erro",
+    },
+  },
   components: {
     schemas: {
-      Invoices: {
+      InvoiceRequest: {
         type: "object",
         properties: {
           id: {
@@ -27,10 +61,23 @@ const doc = {
             format: "cuid",
             example: "clxkz2acg000008l3g4z9h2j7",
           },
-          takerCnpj: { type: "string", example: "12345678000195" },
-          serviceCity: { type: "string", example: "São Paulo" },
-          serviceState: { type: "string", example: "SP" },
-          serviceValue: { type: "number", format: "float", example: 1500.5 },
+          takerCnpj: {
+            type: "string",
+            example: "12345678000195",
+          },
+          serviceCity: {
+            type: "string",
+            example: "São Paulo",
+          },
+          serviceState: {
+            type: "string",
+            example: "SP",
+          },
+          serviceValue: {
+            type: "number",
+            format: "float",
+            example: 1500.5,
+          },
           desiredIssueDate: {
             type: "string",
             format: "date-time",
@@ -68,7 +115,7 @@ const doc = {
           },
         },
       },
-      IInvoiceCreate: {
+      IInvoiceRequestCreate: {
         type: "object",
         required: [
           "takerCnpj",
@@ -82,55 +129,64 @@ const doc = {
           takerCnpj: {
             type: "string",
             example: "12345678000195",
-            description: "CNPJ of the service taker (14 digits)",
+            description: "CNPJ do tomador do serviço (14 dígitos)",
           },
           serviceCity: {
             type: "string",
             example: "São Paulo",
-            description: "City of service provision",
+            description: "Cidade de prestação do serviço",
           },
           serviceState: {
             type: "string",
             example: "SP",
-            description: "State of service provision (UF with 2 characters)",
+            description: "Estado de prestação do serviço (UF com 2 caracteres)",
           },
           serviceValue: {
             type: "number",
             format: "float",
             example: 1500.5,
-            description: "Value of the service",
+            description: "Valor do serviço",
           },
           desiredIssueDate: {
             type: "string",
             format: "date-time",
             example: "2024-12-31T00:00:00.000Z",
-            description: "Desired date for NF emission (ISO 8601)",
+            description: "Data desejada para emissão da NF (ISO 8601)",
           },
           serviceDescription: {
             type: "string",
-            example: "Software development consulting",
-            description: "Detailed description of the service provided",
+            example: "Consultoria em desenvolvimento de software",
+            description: "Descrição detalhada do serviço prestado",
           },
         },
       },
       ErrorResponse: {
         type: "object",
         properties: {
-          message: { type: "string", example: "Validation Error" },
+          message: {
+            type: "string",
+            example: "Erro de validação",
+          },
           errors: {
             type: "array",
             items: {
               type: "object",
               properties: {
-                path: { type: "string", example: "body.takerCnpj" },
+                path: {
+                  type: "string",
+                  example: "body.takerCnpj",
+                },
                 message: {
                   type: "string",
-                  example: "CNPJ must contain only numbers",
+                  example: "CNPJ deve conter apenas números",
                 },
               },
             },
           },
-          details: { type: "string", example: "Additional error information" },
+          details: {
+            type: "string",
+            example: "Informações adicionais do erro",
+          },
         },
       },
     },
