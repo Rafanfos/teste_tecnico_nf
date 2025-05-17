@@ -1,36 +1,37 @@
-import { InvoiceStatus } from "@prisma/client";
+import { PrismaClient, InvoiceStatus } from "@prisma/client";
 import { InvoiceRepository } from "../../../src/core/repositories/invoice.repository";
 import {
   IInvoiceCreateInput,
   IInvoiceOutput,
 } from "../../../src/core/interfaces/invoice.interfaces";
 
-// Mock do Prisma Client
-const mockPrismaInvoiceModel = {
-  create: jest.fn(),
-  findMany: jest.fn(),
-  findUnique: jest.fn(),
-  update: jest.fn(),
-};
-
-// Mock do Prisma Client
-const mockPrisma = {
-  invoiceModel: mockPrismaInvoiceModel,
-};
-
-// Mock do módulo prisma
 jest.mock("../../../src/infra/database/prisma", () => {
+  const mockPrismaInvoiceModel = {
+    create: jest.fn(),
+    findMany: jest.fn(),
+    findUnique: jest.fn(),
+    update: jest.fn(),
+  };
+
+  const mockPrisma = {
+    invoiceModel: mockPrismaInvoiceModel,
+  };
+
   return {
     __esModule: true,
     default: mockPrisma,
   };
 });
 
+const mockPrisma = jest.requireMock(
+  "../../../src/infra/database/prisma"
+).default;
+const mockPrismaInvoiceModel = mockPrisma.invoiceModel;
+
 describe("InvoiceRepository", () => {
   let invoiceRepository: InvoiceRepository;
 
   beforeEach(() => {
-    // Limpa todos os mocks antes de cada teste
     jest.clearAllMocks();
     invoiceRepository = new InvoiceRepository();
   });

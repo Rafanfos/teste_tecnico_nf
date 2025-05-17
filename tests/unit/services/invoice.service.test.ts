@@ -182,15 +182,15 @@ describe("InvoiceService", () => {
       };
 
       const mockEmissionResponse = {
-        invoiceNumber: "NF-123",
-        issueDate: new Date().toISOString(),
+        numeroNF: "NF-123",
+        dataEmissao: new Date().toISOString(),
       };
 
       const mockUpdatedInvoice = {
         ...mockInvoiceRequest,
         status: InvoiceStatus.EMITIDA,
-        invoiceNumber: "NF-123",
-        invoiceIssueDate: new Date(mockEmissionResponse.issueDate),
+        invoiceNumber: mockEmissionResponse.numeroNF,
+        invoiceIssueDate: new Date(mockEmissionResponse.dataEmissao),
       };
 
       mockInvoiceRepository.findById.mockResolvedValue(mockInvoiceRequest);

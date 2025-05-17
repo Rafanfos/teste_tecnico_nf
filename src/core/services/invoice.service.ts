@@ -64,13 +64,12 @@ export class InvoiceService {
     try {
       const emissionResponse: IInvoiceEmissionSuccessResponse =
         await this.externalInvoiceService.emitInvoice(payload);
-
       const updatedInvoiceRequest = await this.invoiceRepository.update({
         id: invoiceRequestId,
         data: {
           status: InvoiceStatus.EMITIDA,
-          invoiceNumber: emissionResponse.invoiceNumber,
-          invoiceIssueDate: new Date(emissionResponse.issueDate),
+          invoiceNumber: emissionResponse.numeroNF,
+          invoiceIssueDate: new Date(emissionResponse.dataEmissao),
         },
       });
 
@@ -79,12 +78,7 @@ export class InvoiceService {
       }
       return updatedInvoiceRequest;
     } catch (error: any) {
-      console.error(
-        "Erro no serviço ao tentar emitir nota fiscal:",
-        error.message
-      );
       throw new Error(`Falha ao emitir Nota Fiscal: ${error.message}`);
     }
   }
 }
-

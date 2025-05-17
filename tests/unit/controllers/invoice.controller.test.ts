@@ -3,7 +3,6 @@ import { InvoiceController } from "../../../src/api/controllers/invoice.controll
 import { InvoiceService } from "../../../src/core/services/invoice.service";
 import { InvoiceStatus } from "@prisma/client";
 
-// Mock do serviço
 jest.mock("../../../src/core/services/invoice.service");
 
 describe("InvoiceController", () => {

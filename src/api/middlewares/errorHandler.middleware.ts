@@ -12,8 +12,6 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ): void => {
-  console.error("ERRO DETECTADO:", err.name, err.message, err.stack);
-
   const statusCode = err.statusCode || 500;
   const message = err.isOperational
     ? err.message
@@ -64,4 +62,3 @@ export const errorHandler = (
     ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
   });
 };
-

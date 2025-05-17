@@ -17,4 +17,3 @@ app.use("/invoices", invoiceRoutes);
 app.use(errorHandler);
 
 export default app;
-

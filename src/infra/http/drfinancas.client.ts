@@ -38,17 +38,13 @@ export class DrFinancasClient implements IExternalInvoiceService {
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
-        console.error(
-          `Erro ao emitir NF na API externa: ${error.response.status}`,
-          error.response.data
-        );
         throw new Error(
           `API Externa: ${error.response.status} - ${JSON.stringify(
             error.response.data
           )}`
         );
       }
-      console.error("Erro desconhecido ao emitir NF na API externa:", error);
+
       throw new Error(
         "Erro desconhecido ao comunicar com a API de emissão de notas fiscais."
       );

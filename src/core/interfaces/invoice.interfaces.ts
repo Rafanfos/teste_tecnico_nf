@@ -37,8 +37,8 @@ export interface IInvoiceEmissionPayload {
 }
 
 export interface IInvoiceEmissionSuccessResponse {
-  invoiceNumber: string;
-  issueDate: string;
+  numeroNF: string;
+  dataEmissao: string;
 }
 
 export interface IExternalInvoiceService {
