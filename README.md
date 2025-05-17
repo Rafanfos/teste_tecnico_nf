@@ -18,7 +18,7 @@ A aplicação foi construída utilizando Node.js, TypeScript, Express e Prisma O
 
 1. Clone o repositório:
    ```bash
-   git clone [URL_DO_REPOSITORIO]
+   git clone git@github.com:Rafanfos/teste_tecnico_nf.git
    cd nf_management_api
    ```
 
@@ -54,7 +54,7 @@ A aplicação foi construída utilizando Node.js, TypeScript, Express e Prisma O
 
 A API estará disponível em `http://localhost:3000` (ou na porta definida na variável de ambiente `PORT`).
 
-Em ambiente de produção, a API estará disponível em: `[URL_DE_PRODUCAO]`
+Em ambiente de produção, a API estará disponível em: `https://teste-tecnico-nf.onrender.com`
 
 ### Fluxo Principal
 
@@ -81,6 +81,7 @@ Em ambiente de produção, a API estará disponível em: `[URL_DE_PRODUCAO]`
   }
   ```
 - **Resposta de Sucesso**: Status 201 (Created)
+   
 
 #### Listar Todas as Solicitações
 - **Método**: GET
