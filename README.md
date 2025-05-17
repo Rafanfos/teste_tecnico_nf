@@ -68,7 +68,7 @@ Em ambiente de produção, a API estará disponível em: `https://teste-tecnico-
 
 #### Criar Solicitação de Nota Fiscal
 - **Método**: POST
-- **Endpoint**: `/api/invoice-requests`
+- **Endpoint**: `/invoices`
 - **Corpo da Requisição**:
   ```json
   {
@@ -85,18 +85,18 @@ Em ambiente de produção, a API estará disponível em: `https://teste-tecnico-
 
 #### Listar Todas as Solicitações
 - **Método**: GET
-- **Endpoint**: `/api/invoice-requests`
+- **Endpoint**: `/invoices`
 - **Resposta de Sucesso**: Status 200 (OK)
 
 #### Buscar Solicitação por ID
 - **Método**: GET
-- **Endpoint**: `/api/invoice-requests/{id}`
+- **Endpoint**: `/invoices/{id}`
 - **Resposta de Sucesso**: Status 200 (OK)
 - **Resposta de Erro**: Status 404 (Not Found)
 
 #### Emitir Nota Fiscal
 - **Método**: POST
-- **Endpoint**: `/api/invoice-requests/{id}/emit`
+- **Endpoint**: `/invoices/{id}/emit`
 - **Resposta de Sucesso**: Status 200 (OK)
 - **Respostas de Erro**: 
   - Status 400 (Bad Request): Nota já emitida ou solicitação cancelada
