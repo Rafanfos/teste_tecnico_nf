@@ -1,25 +1,28 @@
-import { PrismaClient, InvoiceStatus } from "@prisma/client";
+import { InvoiceStatus } from "@prisma/client";
 import { InvoiceRepository } from "../../../src/core/repositories/invoice.repository";
-import { IInvoiceCreateInput, IInvoiceOutput } from "../../../src/core/interfaces/invoice.interfaces";
+import {
+  IInvoiceCreateInput,
+  IInvoiceOutput,
+} from "../../../src/core/interfaces/invoice.interfaces";
 
 // Mock do Prisma Client
 const mockPrismaInvoiceModel = {
   create: jest.fn(),
   findMany: jest.fn(),
   findUnique: jest.fn(),
-  update: jest.fn()
+  update: jest.fn(),
 };
 
 // Mock do Prisma Client
 const mockPrisma = {
-  invoiceModel: mockPrismaInvoiceModel
+  invoiceModel: mockPrismaInvoiceModel,
 };
 
 // Mock do módulo prisma
 jest.mock("../../../src/infra/database/prisma", () => {
   return {
     __esModule: true,
-    default: mockPrisma
+    default: mockPrisma,
   };
 });
 
@@ -41,7 +44,7 @@ describe("InvoiceRepository", () => {
         serviceState: "SP",
         serviceValue: 1000,
         desiredIssueDate: new Date(),
-        serviceDescription: "Serviço de desenvolvimento"
+        serviceDescription: "Serviço de desenvolvimento",
       };
 
       const mockCreatedInvoice: IInvoiceOutput = {
@@ -56,7 +59,7 @@ describe("InvoiceRepository", () => {
         createdAt: new Date(),
         updatedAt: new Date(),
         invoiceNumber: null,
-        invoiceIssueDate: null
+        invoiceIssueDate: null,
       };
 
       mockPrismaInvoiceModel.create.mockResolvedValue(mockCreatedInvoice);
@@ -73,8 +76,8 @@ describe("InvoiceRepository", () => {
           serviceValue: mockData.serviceValue,
           desiredIssueDate: mockData.desiredIssueDate,
           serviceDescription: mockData.serviceDescription,
-          status: InvoiceStatus.PENDENTE_EMISSAO
-        }
+          status: InvoiceStatus.PENDENTE_EMISSAO,
+        },
       });
       expect(result).toEqual(mockCreatedInvoice);
     });
@@ -96,7 +99,7 @@ describe("InvoiceRepository", () => {
           createdAt: new Date(),
           updatedAt: new Date(),
           invoiceNumber: null,
-          invoiceIssueDate: null
+          invoiceIssueDate: null,
         },
         {
           id: "invoice-id-2",
@@ -110,8 +113,8 @@ describe("InvoiceRepository", () => {
           createdAt: new Date(),
           updatedAt: new Date(),
           invoiceNumber: "NF-123",
-          invoiceIssueDate: new Date()
-        }
+          invoiceIssueDate: new Date(),
+        },
       ];
 
       mockPrismaInvoiceModel.findMany.mockResolvedValue(mockInvoices);
@@ -140,7 +143,7 @@ describe("InvoiceRepository", () => {
         createdAt: new Date(),
         updatedAt: new Date(),
         invoiceNumber: null,
-        invoiceIssueDate: null
+        invoiceIssueDate: null,
       };
 
       mockPrismaInvoiceModel.findUnique.mockResolvedValue(mockInvoice);
@@ -150,7 +153,7 @@ describe("InvoiceRepository", () => {
 
       // Assert
       expect(mockPrismaInvoiceModel.findUnique).toHaveBeenCalledWith({
-        where: { id: "invoice-id-1" }
+        where: { id: "invoice-id-1" },
       });
       expect(result).toEqual(mockInvoice);
     });
@@ -160,11 +163,13 @@ describe("InvoiceRepository", () => {
       mockPrismaInvoiceModel.findUnique.mockResolvedValue(null);
 
       // Act
-      const result = await invoiceRepository.findById({ id: "invoice-id-inexistente" });
+      const result = await invoiceRepository.findById({
+        id: "invoice-id-inexistente",
+      });
 
       // Assert
       expect(mockPrismaInvoiceModel.findUnique).toHaveBeenCalledWith({
-        where: { id: "invoice-id-inexistente" }
+        where: { id: "invoice-id-inexistente" },
       });
       expect(result).toBeNull();
     });
@@ -176,7 +181,7 @@ describe("InvoiceRepository", () => {
       const mockUpdateData = {
         status: InvoiceStatus.EMITIDA,
         invoiceNumber: "NF-123",
-        invoiceIssueDate: new Date()
+        invoiceIssueDate: new Date(),
       };
 
       const mockUpdatedInvoice: IInvoiceOutput = {
@@ -191,7 +196,7 @@ describe("InvoiceRepository", () => {
         createdAt: new Date(),
         updatedAt: new Date(),
         invoiceNumber: "NF-123",
-        invoiceIssueDate: new Date()
+        invoiceIssueDate: new Date(),
       };
 
       mockPrismaInvoiceModel.update.mockResolvedValue(mockUpdatedInvoice);
@@ -199,15 +204,16 @@ describe("InvoiceRepository", () => {
       // Act
       const result = await invoiceRepository.update({
         id: "invoice-id-1",
-        data: mockUpdateData
+        data: mockUpdateData,
       });
 
       // Assert
       expect(mockPrismaInvoiceModel.update).toHaveBeenCalledWith({
         where: { id: "invoice-id-1" },
-        data: mockUpdateData
+        data: mockUpdateData,
       });
       expect(result).toEqual(mockUpdatedInvoice);
     });
   });
 });
+
