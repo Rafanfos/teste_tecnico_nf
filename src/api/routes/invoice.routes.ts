@@ -23,14 +23,14 @@ const invoiceController = new InvoiceController();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: "#/components/schemas/IInvoiceRequestCreate"
+ *             $ref: "#/components/schemas/IInvoiceCreate"
  *     responses:
  *       "201":
  *         description: Invoice request created successfully.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/InvoiceRequest"
+ *               $ref: "#/components/schemas/InvoiceModel"
  *       "400":
  *         description: Invalid input data.
  *         content:
@@ -60,7 +60,7 @@ invoiceRoutes.post(
  *             schema:
  *               type: array
  *               items:
- *                 $ref: "#/components/schemas/InvoiceRequest"
+ *                 $ref: "#/components/schemas/InvoiceModel"
  */
 invoiceRoutes.get("/", (req: Request, res: Response, next: NextFunction) =>
   invoiceController.listInvoiceController(req, res, next)
@@ -87,7 +87,7 @@ invoiceRoutes.get("/", (req: Request, res: Response, next: NextFunction) =>
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/InvoiceRequest"
+ *               $ref: "#/components/schemas/InvoiceModel"
  *       "404":
  *         description: Invoice request not found.
  *         content:

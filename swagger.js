@@ -7,24 +7,19 @@ const doc = {
     description: "API for managing invoice requests.",
   },
   host: "localhost:3000",
-  servers: [
-    {
-      url: "http://localhost:3000/api/invoices",
-    },
-  ],
   schemes: ["http"],
   consumes: ["application/json"],
   produces: ["application/json"],
   tags: [
     {
-      name: "InvoiceRequests",
+      name: "Invoices",
       description: "Operations related to invoice requests",
     },
   ],
 
   components: {
     schemas: {
-      InvoiceRequest: {
+      Invoices: {
         type: "object",
         properties: {
           id: {
@@ -73,7 +68,7 @@ const doc = {
           },
         },
       },
-      IInvoiceRequestCreate: {
+      IInvoiceCreate: {
         type: "object",
         required: [
           "takerCnpj",
