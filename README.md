@@ -4,7 +4,7 @@
 
 Esta API foi desenvolvida para gerenciar solicitações de emissão de notas fiscais. Ela permite criar, listar e consultar solicitações, além de emitir notas fiscais através de integração com um serviço externo (DrFinanças).
 
-A aplicação foi construída utilizando Node.js, TypeScript, Express e Prisma ORM, seguindo boas práticas de desenvolvimento como Clean Architecture, validação de dados, tratamento de erros e documentação automática via Swagger.
+A aplicação foi construída utilizando Node.js, TypeScript, Express e Prisma ORM, seguindo boas práticas de desenvolvimento como Clean Architecture, validação de dados e tratamento de erros.
 
 ## Como Instalar
 
@@ -45,12 +45,7 @@ A aplicação foi construída utilizando Node.js, TypeScript, Express e Prisma O
    npx prisma generate
    ```
 
-6. Gere a documentação Swagger:
-   ```bash
-   node swagger.js
-   ```
-
-7. Inicie o servidor:
+6. Inicie o servidor:
    ```bash
    npm run dev
    ```
@@ -68,14 +63,6 @@ Em ambiente de produção, a API estará disponível em: `[URL_DE_PRODUCAO]`
 3. Emita a nota fiscal quando estiver pronto
 
 ## Documentação da API
-
-### Swagger UI
-
-A documentação interativa da API está disponível em:
-- Desenvolvimento: `http://localhost:3000/api-docs`
-- Produção: `[URL_DE_PRODUCAO]/api-docs`
-
-Para habilitar o Swagger UI, descomente as linhas relacionadas no arquivo `src/app.ts`.
 
 ### Endpoints Principais
 
@@ -117,4 +104,4 @@ Para habilitar o Swagger UI, descomente as linhas relacionadas no arquivo `src/a
 
 ## Solução para Frontend Assíncrono
 
-![Diagrama C4 para Solução Assíncrona]
+![Diagrama C4 para Solução Assíncrona](assets/images/frontend_solution.png)
